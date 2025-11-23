@@ -1,5 +1,6 @@
 // lib/screens/farmer/farmer_dashboard.dart
 import 'package:agrilink/utils/extensions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/user_model.dart';
@@ -27,12 +28,19 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
   final FirestoreService _firestoreService = FirestoreService();
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    DashboardHome(),
-    ProduceListScreen(),
-    MarketplaceScreen(),
-    ProfileScreen(),
-  ];
+  late List<Widget> _screens;
+
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      DashboardHome(user: widget.user),
+      ProduceListScreen(),
+      MarketplaceScreen(),
+      ProfileScreen(),
+    ];
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +142,10 @@ class _FarmerDashboardState extends State<FarmerDashboard> {
 
 // Dashboard Home Tab
 class DashboardHome extends StatelessWidget {
+  final AppUser user;
+
+  DashboardHome({required this.user});
+
   final FirestoreService _firestoreService = FirestoreService();
 
   @override
@@ -225,7 +237,8 @@ class DashboardHome extends StatelessWidget {
               icon: Icons.add_circle_outline,
               color: AppColors.primaryGreen,
               onTap: () {
-                // Navigate to add produce
+                Navigator.push(context,
+                  MaterialPageRoute(builder:(context) => AddProduceScreen(user: user),));
               },
             ),
             _ActionCard(

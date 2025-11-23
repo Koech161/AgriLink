@@ -51,6 +51,11 @@ class AppUser {
     );
   }
 
+  /// Backwards-compatible JSON factory used by some call sites.
+  /// If other code calls `AppUser.fromJson(...)` this will delegate to
+  /// `fromFirestore` so both names work.
+  factory AppUser.fromJson(Map<String, dynamic> json) => AppUser.fromFirestore(json);
+
   Map<String, dynamic> toFirestore() {
     return {
       'uid': uid,

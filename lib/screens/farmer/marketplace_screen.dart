@@ -117,7 +117,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       stream: FirebaseFirestore.instance
           .collection('produce')
           .where('status', isEqualTo: 'available')
-          .orderBy('createdAt', descending: true)
+          // .orderBy('createdAt', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -136,7 +136,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
         var produces = snapshot.data!.docs
             .map((doc) => Produce.fromFirestore(doc.data() as Map<String, dynamic>))
             .toList();
-
+          
         // Apply filters
         if (_selectedCategory != 'all') {
           produces = produces.where((p) => p.cropType == _selectedCategory).toList();

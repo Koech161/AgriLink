@@ -262,7 +262,7 @@ class _AddProduceScreenState extends State<AddProduceScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             image: DecorationImage(
-              image: FileImage(_selectedImages[index] as File),
+              image: FileImage(File(_selectedImages[index].path)),
               fit: BoxFit.cover,
             ),
           ),
